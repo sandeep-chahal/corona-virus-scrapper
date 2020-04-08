@@ -20,13 +20,20 @@ def fetch_data():
         data[region] = {}
         data[region]["total_cases"] = re.sub(regex, "", td[1].text)
         data[region]["new_cases"] = re.sub(regex, "", td[2].text)
-        print(region, re.sub(regex, "", td[4].text))
         data[region]["total_deaths"] = re.sub(regex, "", td[3].text)
         data[region]["new_deaths"] = re.sub(regex, "", td[4].text)
         data[region]["total_recovered"] = re.sub(regex, "", td[5].text)
         data[region]["active_cases"] = re.sub(regex, "", td[6].text)
         data[region]["serious"] = re.sub(regex, "", td[7].text)
+    print("fetched data")
     return data
 
 
-fetch_data()
+def store_data(data):
+    json_data = json.dumps(data)
+    with open("data.json", "w") as f:
+        f.write(json_data)
+    print("saved as data.json")
+
+
+store_data(fetch_data())
